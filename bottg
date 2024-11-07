@@ -1,3 +1,7 @@
+import telebot
+import random
+import os
+import requests
 from config import token
 
 #!/usr/bin/python
@@ -5,21 +9,32 @@ from config import token
 # This is a simple echo bot using the decorator mechanism.
 # It echoes any incoming text messages.
 
-import telebot
-import random
+
 
 danet = ['Да','Нет']
 cubic = ['1','2','3','4','5','6']
 
 
 bot = telebot.TeleBot(token)
+print(os.listdir('images'))
+def get_anime_image_url():    
+        url = 'https://kitsu.io/api/edge/anime?filter[text]=tokio'
+        res = requests.get(url)
+        data = res.json()
+        return data['data']["attributes"]
+
+def get_duck_image_url():    
+        url = 'https://random-d.uk/api/random'
+        res = requests.get(url)
+        data = res.json()
+        return data['url']
 
 
 # Handle '/start' and '/help'
-@bot.message_handler(commands=['help', 'start'])
+@bot.message_handler(commands=['help'])
 def send_welcome(message):
     bot.reply_to(message, """\
-Привет! Я Хори-бот все сообщения с исключением команд и фото я буду повторять!\
+ Я Хори-бот все сообщения с исключением команд и фото я буду повторять!\
 """)
     
 @bot.message_handler(commands=['info'])
@@ -43,7 +58,24 @@ def on_horie(message):
 def on_cube(message):
     bot.reply_to(message, "Вы подбрасываете кубик и вам выпадает...")
     bot.reply_to(message, random.choice(cubic))
+    
+@bot.message_handler(commands=['mem'])
+def send_mem(message):
+    img_name = random.choice(os.listdir('images'))
+    with open(f'images/{img_name}', 'rb') as f:  
+        bot.send_photo(message.chat.id, f)
+    
+@bot.message_handler(commands=['duck'])
+def duck(message):
+        '''По команде duck вызывает функцию get_duck_image_url и отправляет URL изображения утки'''
+        image_url = get_duck_image_url()
+        bot.reply_to(message, image_url)
 
+@bot.message_handler(commands=['anime'])
+def anim(message):
+        image_url = get_anime_image_url()
+        bot.reply_to(message, image_url)
+    
 
 
 
