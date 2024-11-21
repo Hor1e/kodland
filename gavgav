@@ -1,22 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>GaVgavGav</title>
-</head>
-<body>
-    <h1>Гав гав?</h1>
-    <p>гав</p>
-    <h2>Гав гав гав</h2>
-             <ul>
-                   <li>Гав гав +</li>
-                   <li>Гав - гав</li>
-             </ul>
-     <img src='https://avatars.mds.yandex.net/i?id=fc5406cc78a93d855e8185aa551674bb_l-5532663-images-thumbs&n=33&w=1079&h=720' alt="Image 1">
-     <div style="position:relative;overflow:hidden;"><a href="https://yandex.ru/maps/org/yeshchkere_market/126062237253/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;">Ещкере маркет</a><a href="https://yandex.ru/maps/10842/arkhange'lskaya-oblast'/category/3d_services/24380081615/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:14px;">3D-услуги в Архангельской области</a><iframe src="https://yandex.ru/map-widget/v1/?ll=38.755415%2C61.882967&mode=search&oid=126062237253&ol=biz&z=17" width="560" height="400" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe></div>
-     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8038.089506481376!2d30.57527708762363!3d59.757385255403214!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4696279e6c1c2d53%3A0xc85c0bcdab36eee1!2z0JXRidC60LXRgNC1!5e0!3m2!1sru!2sru!4v1730989601978!5m2!1sru!2sru" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-</body>
-<head>
-    <title>Полезная информация!</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-</html>
+from flask import Flask
+import random
+app = Flask(__name__)
+
+facts_list = ['Большинство людей, страдающих технологической зависимостью, испытывают сильный стресс, когда они находятся вне зоны покрытия сети или не могут использовать свои устройства.',
+'Согласно исследованию, проведенному в 2018 году, более 50% людей в возрасте от 18 до 34 лет считают себя зависимыми от своих смартфонов.',
+'Изучение технологической зависимости является одной из наиболее актуальных областей научных исследований в настоящее время.']
+
+monetka = ["Орёл","Решка"]
+
+@app.route("/1")
+def hello_world():
+    return f'<p>{random.choice(facts_list)}</p>'
+
+@app.route("/2")
+def hello_bye():
+    return '<h1>Hello, bye!</h1>'
+
+@app.route("/3")
+def GavGav():
+    return '<h1>GavGavGAV</h1>'
+
+@app.route("/4")
+def Monetka():
+    return f'<p>{random.choice(monetka)}</p>'
+
+
+
+app.run(debug=True)
